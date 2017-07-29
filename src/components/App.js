@@ -6,7 +6,7 @@ import { Grid, Navbar } from 'react-bootstrap';
 import logo from "../images/logo.svg";
 
 // Styles
-import "../css/App.css";
+import "../css/app.css";
 
 class App extends Component {
   render() {
