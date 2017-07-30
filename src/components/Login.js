@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import base from "../base";
+import { base, firebase } from "../base";
 
 import "../css/login.css";
 import GoogleButton from "../images/google-signin.png";
@@ -8,37 +8,47 @@ import GoogleButton from "../images/google-signin.png";
 class Login extends React.Component {
   constructor() {
     super();
+
     this.authenticate = this.authenticate.bind(this);
-    this.authHandler = this.authHandler.bind(this);
+    this.handleAuth = this.handleAuth.bind(this);
   }
 
   componentWillMount() {
-    base.onAuth(user => {
+    firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        this.authHandler(null, { user });
+        this.handleAuth(user);
       }
     });
   }
 
   authenticate() {
-    base.authWithOAuthPopup("google", this.authHandler);
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    firebase.auth().signInWithPopup(provider).then(result => {
+      this.handleAuth(result.user);
+    });
   }
 
-  authHandler(err, authData) {
-    const storeRef = base.database().ref();
+  handleAuth(user) {
+    // Set user id
+    const { uid, displayName } = user;
 
+    const storeRef = firebase.database().ref();
+
+    // Check the database for an owner
     storeRef.once("value", snapshot => {
       const data = snapshot.val() || {};
 
+      // If there is no owner, set current user as owner in firebase
       if (!data.owner) {
         storeRef.set({
-          owner: authData.user.uid
+          owner: uid
         });
       }
 
       // Set login status and owner
-      this.props.setLoginState(authData.user.uid);
-      this.props.setOwnerState(data.owner, authData.user.uid);
+      this.props.setLoginState(uid);
+      this.props.setOwnerState(data.owner, uid, displayName);
     });
   }
 

@@ -29,10 +29,14 @@ class App extends Component {
     this.setState({ uid: id });
   }
 
-  setOwnerState(id, owner) {
+  setOwnerState(id, owner, displayname) {
+    // Get first name
+    displayname = displayname.split(" ")[0];
+
     this.setState({
       uid: id,
-      owner: owner || id
+      owner: owner || id,
+      name: displayname
     });
   }
 
@@ -48,7 +52,11 @@ class App extends Component {
     }
 
     // If user is logged in
-    return <p> hello </p>;
+    return (
+      <p>
+        {" "}{this.state.name}'s fragrance list{" "}
+      </p>
+    );
   }
 }
 

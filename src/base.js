@@ -1,10 +1,16 @@
-import Rebase from 're-base';
 
-const base = Rebase.createClass({
-    apiKey: "AIzaSyDzdNEFpHVvkjabfq4S7hrx1xu06WWmjD0",
-    authDomain: "fragrancetracker.firebaseapp.com",
-    databaseURL: "https://fragrancetracker.firebaseio.com/",
-    projectId: "fragrancetracker"
+import Rebase from "re-base";
+import firebase from "firebase";
+
+const app = firebase.initializeApp({
+    apiKey: "AIzaSyBpar_bvqHaSZQXgNrbBmZ_XOEC1lGO0gE",
+    authDomain: "fragrancetracker-71502.firebaseapp.com",
+    databaseURL: "https://fragrancetracker-71502.firebaseio.com",
+    projectId: "fragrancetracker-71502",
+    storageBucket: "fragrancetracker-71502.appspot.com",
+    messagingSenderId: "62125148507"
 });
 
-export default base;
+const base = Rebase.createClass(app.database());
+
+export {base, firebase};
