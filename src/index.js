@@ -17,13 +17,12 @@ import "bootstrap/dist/css/bootstrap-theme.css";
 // Other styles
 import "./css/index.css";
 
-const Routes = () => (
+const MainRoute = () =>
   <Router>
     <div>
-      <Route exact path="/" component={Login}/>
+      <Route exact path="/" component={App} />
     </div>
-  </Router>
-)
+  </Router>;
 
-ReactDOM.render(<Routes />, document.getElementById("root"));
+ReactDOM.render(<MainRoute />, document.getElementById("root"));
 registerServiceWorker();
