@@ -17,7 +17,6 @@ class Login extends React.Component {
       if (user) {
         this.authHandler(null, { user });
       }
-      console.log(user);
     });
   }
 
@@ -33,7 +32,7 @@ class Login extends React.Component {
 
       if (!data.owner) {
         storeRef.set({
-          owner: authData.user.uid,
+          owner: authData.user.uid
         });
       }
 
